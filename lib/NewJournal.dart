@@ -25,6 +25,9 @@ class _NewJournal extends State<NewJournal> {
   String? _selectedLocation;
   LatLng? _selectedLatLng;
 
+  String? _selectedMood;
+  final _customerMoodController=TextEditingController();
+  final List<String> _moods=['Calm','Peaceful','Happy','Sad','Excited'];
   final _titleController=TextEditingController();
   final _contentController=TextEditingController();
   final  _locationController= TextEditingController();
@@ -110,12 +113,18 @@ class _NewJournal extends State<NewJournal> {
 
       }
 
+      String mood= _selectedMood ?? '';
+      if(_customerMoodController.text.isEmpty){
+        mood=_customerMoodController.text;
+      }
+
 
       Map<String, String> journalData = {
         'title': title,
         'content': content,
         'imagePaths': jsonEncode(imagePaths),
         'location':_selectedLocation??'',
+        'mood': mood,
       };
 
       final journalFile = File('${directory.path}/journals.json');
@@ -209,30 +218,31 @@ class _NewJournal extends State<NewJournal> {
     }
   }
 
-  void _showMapPicker() async {
-    await showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: MapPicker(
-          onLocationPicked: (location, address) {
-            setState(() {
-              _selectedLatLng = location;
-              _locationController.text = address;
-              _selectedLocation = "${location.latitude},${location.longitude}";
-            });
-          },
-        ),
-      ),
-    );
-  }
+  // void _showMapPicker() async {
+  //   await showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     builder: (context) => Container(
+  //       height: MediaQuery.of(context).size.height * 0.7,
+  //       child: MapPicker(
+  //         onLocationPicked: (location, address) {
+  //           setState(() {
+  //             _selectedLatLng = location;
+  //             _locationController.text = address;
+  //             _selectedLocation = "${location.latitude},${location.longitude}";
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   void dispose(){
     _titleController.dispose();
     _contentController.dispose();
     _locationController.dispose();
+    _customerMoodController.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -271,6 +281,29 @@ class _NewJournal extends State<NewJournal> {
               ),
               SizedBox(height: 20,),
 
+              Text("Mood Tracker:",style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),),
+
+              SizedBox(height: 10,),
+
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(border: OutlineInputBorder(),hintText: "Select a mood",),
+                value: _selectedMood,
+                items: _moods.map((mood){
+                  return DropdownMenuItem(value:mood,child:Text(mood), );
+                }).toList(),
+                onChanged: (value){
+                  setState(() {
+                    _selectedMood=value;
+                  });
+                },
+              ),
+
+              SizedBox(height: 10,),
+
+              TextField(controller: _customerMoodController,
+              decoration: InputDecoration(border:OutlineInputBorder(),hintText: "Enter a custom mood(optional)"),),
+
+              SizedBox(height: 20,),
               TextField(controller: _locationController,onChanged: (value) {
                 if(_debounce?.isActive??false)
                   _debounce!.cancel();
@@ -368,10 +401,10 @@ class _NewJournal extends State<NewJournal> {
               ElevatedButton(onPressed:_saveJournal
                   , child:Text("Save journal")),
 
-              ElevatedButton(
-                onPressed: _showMapPicker,
-                child: Text("Pick on Map"),
-              ),
+              // ElevatedButton(
+              //   onPressed: _showMapPicker,
+              //   child: Text("Pick on Map"),
+              // ),
 
 
 
