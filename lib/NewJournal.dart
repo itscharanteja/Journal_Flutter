@@ -141,7 +141,6 @@ class _NewJournal extends State<NewJournal> {
         return;
       }
 
-
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -158,13 +157,13 @@ class _NewJournal extends State<NewJournal> {
         //   intervalDuration: Duration(seconds: 10),
         // );
         //
-        final locationSettings = LocationSettings(
-          accuracy: LocationAccuracy.high,
-          distanceFilter: 10,
-        );
+        // final locationSettings = LocationSettings(
+        //   accuracy: LocationAccuracy.high,
+        //   distanceFilter: 10,
+        // );
 
         Position position =await Geolocator.getCurrentPosition(
-          locationSettings:locationSettings,
+          desiredAccuracy:LocationAccuracy.high,
         );
 
         if (permission == LocationPermission.deniedForever) {
@@ -173,13 +172,32 @@ class _NewJournal extends State<NewJournal> {
           return;
         }
 
+        List<Placemark> placemarks= await placemarkFromCoordinates(position.latitude, position.longitude);
+
+        if(placemarks.isNotEmpty){
+          Placemark place=placemarks[0];
+          String locationName="${place.locality}, ${place.administrativeArea},${place.country}";
+
+          setState(() {
+            _selectedLocation = "${position.latitude},${position.longitude}";
+
+            _locationController.text=locationName;
+          });
+        }
+        else{
+          setState(() {
+            _selectedLocation="${position.latitude},${position.longitude}";
+            _locationController.text="My location";
+          });
+        }
 
 
 
-        setState(() {
-          _selectedLocation = "${position.latitude},${position.longitude}";
-          _locationController.text="My Location";
-        });
+
+        // setState(() {
+        //   _selectedLocation = "${position.latitude},${position.longitude}";
+        //   _locationController.text="My Location";
+        // });
 
 
         // Position position =await Geolocator.getCurrentPosition();
