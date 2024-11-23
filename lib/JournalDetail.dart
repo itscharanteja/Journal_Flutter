@@ -1,6 +1,7 @@
-import'package:flutter/material.dart';
+import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:untitled/journal_entry.dart';
-import'dart:io';
+import 'dart:io';
 
 class JournalDetail extends StatelessWidget {
   final JournalEntry entry;
@@ -18,14 +19,17 @@ class JournalDetail extends StatelessWidget {
         itemBuilder: (context, imageIndex) {
           return Container(
             width: 150, // Fixed width for each image
-            margin: const EdgeInsets.symmetric(horizontal: 8.0), // Spacing between images
+            margin: const EdgeInsets.symmetric(
+                horizontal: 8.0), // Spacing between images
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: FileImage(File(imagePaths[imageIndex])),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.circular(8.0), // Optional: Rounded corners
-              border: Border.all(color: Colors.grey.shade300), // Optional: Border
+              borderRadius:
+                  BorderRadius.circular(8.0), // Optional: Rounded corners
+              border:
+                  Border.all(color: Colors.grey.shade300), // Optional: Border
             ),
           );
         },
@@ -90,6 +94,43 @@ class JournalDetail extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
+
+              if (entry.mood != null && entry.mood!.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Icon(Icons.mood, color: Colors.grey[600]),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Mood: ${entry.mood}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+              ],
+              // Add Location Display
+              if (entry.locationName != null &&
+                  entry.locationName!.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Icon(Icons.location_on, color: Colors.grey[600]),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Location: ${entry.locationName}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              SizedBox(
+                height: 16,
+              ),
               Text(
                 entry.content,
                 style: const TextStyle(fontSize: 16),

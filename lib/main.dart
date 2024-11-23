@@ -13,8 +13,6 @@ void main() {
 class TravelJournal extends StatelessWidget {
   const TravelJournal({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,7 +23,8 @@ class TravelJournal extends StatelessWidget {
         '/NewJournal': (context) => NewJournal(),
         // '/ViewJournal': (context) => ViewJournal(
         '/ViewJournal': (context) => ViewJournal(),
-        '/JourneyMap':(context) => JourneyMap(),
-    },    );
+        '/JourneyMap': (context) => JourneyMap(),
+      },
+    );
   }
 }
