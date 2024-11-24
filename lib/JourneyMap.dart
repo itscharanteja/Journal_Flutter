@@ -31,7 +31,7 @@ class _JourneyMapState extends State<JourneyMap> {
 
       if (!await journalFile.exists()) return;
 
-      final String fileContent = await journalFile.readAsStringSync();
+      final String fileContent = journalFile.readAsStringSync();
       final List<dynamic> journals = jsonDecode(fileContent);
 
       List<LatLng> loadedLocations = journals
@@ -75,6 +75,35 @@ class _JourneyMapState extends State<JourneyMap> {
           'My Journies',
           style: TextStyle(color: Colors.white),
         ),
+<<<<<<< HEAD
+        body: _locations.isEmpty ? const Center(
+          child: Text(
+            "No journals are here display", style: TextStyle(fontSize: 19),),
+        )
+            : FlutterMap(
+          mapController: _mapController,
+          options: MapOptions(initialCenter: _locations.isNotEmpty? _locations.first : const LatLng(0, 0),
+            initialZoom: 5.0,
+          )
+          // MapOptions(
+          //     center: _locations.isNotEmpty ? _locations.first : LatLng(0, 0),
+          //
+          //
+          //     zoom: 5.0,),
+          ,children: [TileLayer(
+        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        subdomains: const ['a','b', 'c'],),
+            MarkerLayer(
+              markers: _locations.map((loc){
+            return Marker
+              (point:loc,
+            width: 80.0,
+            height:80.0,
+            child: const Icon(
+              Icons.location_pin,
+              color:Colors.red,
+              size:30.0,
+=======
       ),
       body: _locations.isEmpty
           ? Center(
@@ -117,6 +146,7 @@ class _JourneyMapState extends State<JourneyMap> {
                   }).toList(),
                 ),
               ],
+>>>>>>> 21cd1606a18a3e4f96463b8ec73c2c180d46c8d2
             ),
     );
   }
