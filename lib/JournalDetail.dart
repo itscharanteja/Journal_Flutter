@@ -6,12 +6,12 @@ import 'dart:io';
 class JournalDetail extends StatelessWidget {
   final JournalEntry entry;
 
-  const JournalDetail({Key? key, required this.entry}) : super(key: key);
+  const JournalDetail({super.key, required this.entry});
 
   Widget _buildImageGallery(List<String> imagePaths) {
     if (imagePaths.isEmpty) return const SizedBox.shrink();
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal, // Scroll horizontally
