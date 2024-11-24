@@ -7,7 +7,7 @@ import 'package:untitled/ViewJournal.dart';
 import 'package:untitled/journal_entry.dart';
 
 void main() {
-  runApp(TravelJournal());
+  runApp(const TravelJournal());
 }
 
 class TravelJournal extends StatelessWidget {
@@ -17,14 +17,20 @@ class TravelJournal extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Travel Journal',
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
-        '/MainScreen': (context) => MainScreen(),
+        '/MainScreen': (context) => const MainScreen(),
         '/NewJournal': (context) => NewJournal(),
         // '/ViewJournal': (context) => ViewJournal(
+<<<<<<< HEAD
+        '/ViewJournal': (context) => const ViewJournal(),
+        '/JourneyMap':(context) => const JourneyMap(),
+    },    );
+=======
         '/ViewJournal': (context) => ViewJournal(),
         '/JourneyMap': (context) => JourneyMap(),
       },
     );
+>>>>>>> 21cd1606a18a3e4f96463b8ec73c2c180d46c8d2
   }
 }
