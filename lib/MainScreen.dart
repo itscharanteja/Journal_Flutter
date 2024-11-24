@@ -56,7 +56,11 @@ class _MainScreenState extends State<MainScreen> {
             return JournalEntry(
               title: entry['title'] ?? 'Untitled',
               content: entry['content'] ?? '',
+<<<<<<< HEAD
+              imagePaths: List<String>.from(jsonDecode(entry['imagePaths'] ?? '[]')),
+=======
               imagePaths: List<String>.from(entry['imagePaths'] ?? []),
+>>>>>>> 21cd1606a18a3e4f96463b8ec73c2c180d46c8d2
             );
           }).toList();
           journalCount = journalEntries.length;
