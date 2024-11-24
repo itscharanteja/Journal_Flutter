@@ -7,7 +7,7 @@ import 'package:untitled/JournalDetail.dart';
 
 class ViewJournal extends StatefulWidget {
   final List<JournalEntry>? entries;
-  const ViewJournal({Key? key, this.entries}) : super(key: key);
+  const ViewJournal({super.key, this.entries});
 
   //
   // final List<JournalEntry> entries;
@@ -130,6 +130,78 @@ class _ViewJournalState extends State<ViewJournal> {
     } catch (e) {
       print("error deleting the journal");
     }
+<<<<<<< HEAD
+}
+
+
+
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[800],
+        title: const Text("ViewJournal",style: TextStyle(color: Colors.white,fontSize: 23,),),
+
+      ),
+      body:Padding(padding: const EdgeInsets.all(17.0),
+      child: entries.isEmpty? const Center(child:Text("No journals yet")):
+          ListView.builder(itemCount: entries.length,itemBuilder:(context,index){
+        final entry=entries[index];
+
+
+
+        return GestureDetector(
+          onTap: (){
+            Navigator.push(context,MaterialPageRoute(builder: (context)=> JournalDetail(entry:entry),));
+          },
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if(entry.imagePaths.isNotEmpty)
+                  Container(
+                    width: double.infinity,
+                    height: 200,
+                    decoration: BoxDecoration(image: DecorationImage(image:FileImage(File(entry.imagePaths[0])),
+                    fit:BoxFit.cover,),),
+                  ),
+                Padding(padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(entry.title,style: const TextStyle(
+                      fontSize:19,fontWeight: FontWeight.bold,
+                    ),),
+                    const SizedBox(height: 8,),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(entry.content.length>50? '${entry.content.length>50}': entry.content)),
+                        if (entry.content.length>50)
+                          const Text('View More....',style: TextStyle(color:Colors.blue),),
+                      ],
+                    ),
+                  ],
+                ),),
+                IconButton(onPressed:(){
+                  _deleteJournal(index);
+                }, icon: const Icon(Icons.delete,color:Colors.red),)
+              ],
+              // title: Text(key,style: TextStyle(fontWeight: FontWeight.bold),),
+              // subtitle: Text(value),
+            ),
+          ),
+        );
+
+      }),
+      )
+
+    );
+=======
+>>>>>>> 21cd1606a18a3e4f96463b8ec73c2c180d46c8d2
   }
 
   @override
